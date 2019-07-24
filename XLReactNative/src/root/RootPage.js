@@ -35,7 +35,7 @@ export default class RootPage extends Component {
                 <FlatList
                     style={styles.flastBox}
                     data={this.state.data}
-                    keyExtractor={({ item, index }) => index + "List"}
+                    keyExtractor={({ item, index }) => index}
                     renderItem={({ item, index }) => {
                         return this.renderItem(item, index);
                     }}

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-string-refs */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable prettier/prettier */
 /* eslint-disable quotes */
@@ -31,10 +32,15 @@ export default class XLBannerPage extends Component {
         };
     }
 
+    componentWillUnmount() {
+        this.refs.adPage.stopTimer();
+    }
+
     render() {
         return (
             <View style={styles.containter}>
                 <XLScrollView
+                    ref={"adPage"}
                     style={styles.bannerBox}
                     imageStyle={styles.bannerBox}
                     loopState={true}

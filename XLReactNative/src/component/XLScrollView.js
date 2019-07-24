@@ -16,8 +16,9 @@ import {
 } from "react-native";
 
 const window = Dimensions.get("window");
-let timer = null;
-let timer1 = null;
+var timer = null;
+var timer1 = null;
+var timer2 = null;
 
 export default class XLScrollView extends Component {
     firstInit = true;
@@ -46,16 +47,9 @@ export default class XLScrollView extends Component {
 
     /*组件将要被移除方法*/
     componnetWillUnmount() {
-        if (this.props.autoScroll && timer) {
-            this.stopTimer();
-        }
-        if (timer) {
-            timer = null;
-        }
-    }
-    componnetWillUnmount() {
         this.stopTimer();
     }
+
     //组件加载完成
     componentDidMount() {
         this.props.autoScroll && this.state.count > 1 && this.startTimer();
@@ -64,12 +58,19 @@ export default class XLScrollView extends Component {
     stopTimer() {
         clearInterval(timer);
         timer = null;
-        clearInterval(timer1);
+        clearTimeout(timer1);
         timer1 = null;
+        clearTimeout(timer2);
+        timer2 = null;
     }
     // 开启定时器
     startTimer() {
+        if (!this.refs.scrollView) {
+            return;
+        }
+        this.stopTimer();
         timer = setInterval(() => {
+            console.log(123);
             this.scrollToPage(this.state.currentPage + 1, true);
         }, this.props.duration);
     }
@@ -89,7 +90,6 @@ export default class XLScrollView extends Component {
             currentPage: showIndex,
             imageArray: imageArray,
             count: count,
-
         };
     }
 
@@ -101,6 +101,10 @@ export default class XLScrollView extends Component {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     pagingEnabled={true}
+                    // 开始拖拽
+                    onScrollBeginDrag={this.onScrollBeginDrag.bind(this)}
+                    // 停止拖拽
+                    onScrollEndDrag={this.onScrollEndDrag.bind(this)}
                     onMomentumScrollEnd={(e) => this.onAnimationEnd(e)}
                     onContentSizeChange={(contentWidth, contentHeight) => {
                         if (this.firstInit) {
@@ -234,14 +238,17 @@ export default class XLScrollView extends Component {
     /*定时器操作*/
     /* 调用开始拖拽 */
     onScrollBeginDrag() {
+        console.log("begin");
         if (this.props.autoScroll && this.state.count > 1) {
             // 停止定时器
             this.stopTimer();
+            this.props.onScrollBeginDrag && this.props.onScrollBeginDrag();
         }
     }
 
     /*调用停止拖拽*/
     onScrollEndDrag() {
+        console.log("end");
         if (this.props.autoScroll && this.state.count > 1) {
             // 开启定时器
             this.startTimer();
@@ -257,10 +264,12 @@ export default class XLScrollView extends Component {
             //向右最大页，需重置到第一页
             if (currentPage >= this.state.count - 1) {
                 if (auto) {
+                    // this.refs.scrollView &&
                     this.refs.scrollView.scrollTo({ x: this.props.imageStyle.width * (currentPage), animated: auto });
                     //动画连贯处理
                     timer1 = setTimeout(() => {
                         currentPage = 1;
+                        // this.refs.scrollView &&
                         this.refs.scrollView.scrollTo({ x: this.props.imageStyle.width * (currentPage), animated: false });
                     }, 500);
                 } else {
@@ -271,24 +280,29 @@ export default class XLScrollView extends Component {
             } else if (currentPage < 1) {
                 //向左到最小页，需重置到倒数第二页
                 if (auto) {
+                    // this.refs.scrollView && 
                     this.refs.scrollView.scrollTo({ x: this.props.imageStyle.width * (currentPage), animated: auto });
                     //动画连贯处理
-                    timer1 = setTimeout(() => {
+                    timer2 = setTimeout(() => {
                         currentPage = this.state.count - 2;
+                        // this.refs.scrollView && 
                         this.refs.scrollView.scrollTo({ x: this.props.imageStyle.width * (currentPage), animated: false });
                     }, 500);
                 } else {
                     currentPage = this.state.count - 2;
+                    // this.refs.scrollView && 
                     this.refs.scrollView.scrollTo({ x: this.props.imageStyle.width * (currentPage), animated: false });
                 }
 
             } else {
                 if (auto) {
+                    // this.refs.scrollView && 
                     this.refs.scrollView.scrollTo({ x: this.props.imageStyle.width * (currentPage), animated: auto });
                 }
             }
         } else {
             if (auto) {
+                // this.refs.scrollView && 
                 this.refs.scrollView.scrollTo({ x: this.props.imageStyle.width * (currentPage), animated: auto });
             }
         }
