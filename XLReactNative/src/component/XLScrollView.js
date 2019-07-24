@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-class-members */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-string-refs */
@@ -51,6 +52,9 @@ export default class XLScrollView extends Component {
         if (timer) {
             timer = null;
         }
+    }
+    componnetWillUnmount() {
+        this.stopTimer();
     }
     //组件加载完成
     componentDidMount() {
