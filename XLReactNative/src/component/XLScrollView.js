@@ -18,7 +18,7 @@ const window = Dimensions.get("window");
 let timer = null;
 let timer1 = null;
 
-export default class LuckinScrollView extends Component {
+export default class XLScrollView extends Component {
     firstInit = true;
 
     static defaultProps = {
