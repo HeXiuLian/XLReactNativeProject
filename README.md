@@ -3,6 +3,8 @@ RN项目，通用组件。
 
 ### 1. XLScrollView
 
+
+
 API：
 
 ```
@@ -45,3 +47,48 @@ currentPagePointerStyle: ViewPropTypes.Style,//当前显示页码的样式,Style
 otherPagePointerStyle: ViewPropTypes.Style,//其他页码的样式,StyleSheet创建
 
 ```
+
+### 2、XLCategoryList：菜单分类列表
+
+使用：
+
+```
+ <XLCategoryList
+        style={styles.listbox}
+        leftList={AppData.leftList}
+        rightList={AppData.rightList}
+        addButtonClick={(item, index, section) => {
+
+        }}
+        sectionItemClick={(item, index, section) => {
+
+        }}
+        scrollEnd={(hasScrollEnd) => {
+            if (hasScrollEnd) {
+                if (this.state.currentInTop) {
+                    this.refs.baseScrollView.scrollToEnd();
+                    this.state.currentInTop = false;
+                }
+            } else {
+                if (!this.state.currentInTop) {
+                    this.refs.baseScrollView.scrollTo({ y: 0, animated: true });
+                    this.state.currentInTop = true;
+                }
+            }
+        }}
+/>
+
+```
+属性说明：
+
+```
+style: null, ///列表大小style
+leftList: [],//左侧分类列表数组
+rightList: [],//右侧分类列表
+sectionItemClick: null,//点击右侧分组的item回调
+addButtonClick: null,//点击加号按钮回调
+scrollEnd: null,//右侧分类列表开始滚动离开顶部和回到顶部回调
+```
+
+
+

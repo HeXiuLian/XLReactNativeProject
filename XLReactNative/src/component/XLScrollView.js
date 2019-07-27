@@ -1,4 +1,3 @@
-/* eslint-disable no-dupe-class-members */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-string-refs */

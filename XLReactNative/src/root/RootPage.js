@@ -25,7 +25,7 @@ export default class RootPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: ["广告视图", "日历"]
+            data: ["广告视图", "日历", "菜单列表"]
         };
     }
 
@@ -68,6 +68,10 @@ export default class RootPage extends Component {
                 break;
             case 1: {
 
+            }
+                break;
+            case 2: {
+                this.props.navigation.navigate('categoryListPage');
             }
                 break;
             default: {
