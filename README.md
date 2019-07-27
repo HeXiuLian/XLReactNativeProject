@@ -3,6 +3,7 @@ RN项目，通用组件。
 
 ### 1. XLScrollView
 
+![banner](https://github.com/HeXiuLian/XLReactNativeProject/blob/master/README_Source/banner.gif)
 
 
 API：
@@ -49,6 +50,8 @@ otherPagePointerStyle: ViewPropTypes.Style,//其他页码的样式,StyleSheet创
 ```
 
 ### 2、XLCategoryList：菜单分类列表
+
+![菜单](https://github.com/HeXiuLian/XLReactNativeProject/blob/master/README_Source/menuList.gif)
 
 使用：
 
