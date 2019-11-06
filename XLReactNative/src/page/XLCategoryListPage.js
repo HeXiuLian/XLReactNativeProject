@@ -43,6 +43,7 @@ export default class XLCategoryListPage extends Component {
                     ref={'baseScrollView'}
                     bounces={false}
                     showsVerticalScrollIndicator={false}
+                    scrollEnable={false}
                     onScroll={(e) => this.onMomentumScrollEnd(e)}
                 >
                     <View>
